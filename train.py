@@ -21,7 +21,6 @@ def capture_do_nothing():
         if cv2.waitKey(1) & 0xFF == ord('s'):
             while count != 50:
                 gray = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
-                gray = np.resize(gray,(50,50))
                 df = df.append({'Image':gray,'Action':0},ignore_index=True)
                 count+=1
                 return_value, image = camera.read()
@@ -42,7 +41,6 @@ def capture_jump():
         if cv2.waitKey(1) & 0xFF == ord('s'):
             while count != 50:
                 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-                gray = np.resize(gray, (50, 50))
                 df = df.append({'Image': gray, 'Action': 1}, ignore_index=True)
                 count+=1
                 return_value, image = camera.read()
@@ -53,14 +51,20 @@ def capture_jump():
 def prepare_dataset():
     global df
     df = df.sample(frac=1).reset_index(drop=True)
-    X = df['Image'].values
-    y = df['Action'].values
-    y = to_categorical(y)
-    return X,y
+    X = df.iloc[:,0]
+    Y = df.iloc[:,1]
+    x = []
+    for i in range(100):
+        x.append(X[i])
+    x = np.asarray(x)
+    x = (x-128)/128
+    x = np.reshape(x,(100,480,640,1))
+    y = to_categorical(Y)
+    return x,y
 
 def load_model():
     model = Sequential()
-    model.add(Conv2D(32,kernel_size=(3,3),strides=(1,1),activation='relu',input_shape=(50,50,1)))
+    model.add(Conv2D(32,kernel_size=(3,3),strides=(1,1),activation='relu',input_shape=(480,640,1)))
     model.add(MaxPool2D(pool_size=(2,2),strides=(2,2)))
     model.add(Conv2D(64,kernel_size=(3,3),strides=(1,1),activation='relu'))
     model.add(MaxPool2D(pool_size=(2,2),strides=(2,2)))
@@ -70,7 +74,7 @@ def load_model():
     model.compile(optimizer='adam',loss='categorical_crossentropy',metrics=['accuracy'])
     return model
 def train(model,X,y):
-    model.fit(X, y, epochs=50)
+    model.fit(X,y,batch_size=16,epochs=50)
 
 if __name__=='__main__':
     capture_do_nothing()
