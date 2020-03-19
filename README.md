@@ -22,20 +22,10 @@
 <p align="center">
 <img src = "./img/demo2.gif" height=400 width=800>
 </p>
-<h2> How it works</h2>
-<p>There are 8 inputs to neural network</p>
-<img src="./img/fbex.jpg" align="right">
-<ol>
-					<li><h5>horizontal distance from the start of pipe</h5></li>
-					<li><h5>horizontal distance from the end of pipe</h5></li>
-					<li><h5>vertical distance from the upper pipe</h5></li>
-					<li><h5>vertical distance from the lower pipe</h5></li>
-					<li><h5>y position of bird</h5></li>
-					<li><h5>y velocity of bird</h5></li>
-					<li><h5>vertical distance from sky</h5></li>
-					<li><h5>vertical distance from ground</h5></li>
-				</ol>
-<p>For detailed explanation, you can visit my <a href="https://sushantpatrikar.github.io/flappybirdAI.html"> website</a>.</p>
-<h2>Future Scope</h2>
-<p>Right now, the algorithm used is NEAT. Some other Reinforcement Learning algorithm, such as Deep Q-Learning can be applied to it. If you have any other ideas, Pull Requests are welcomed!</p>
-        
+
+<h2>How to use:</h2>
+
+Clone this repsitory using the following command:
+```
+https://github.com/sushantPatrikar/teachable-dinosaur.git
+```
