@@ -6,21 +6,21 @@
 
 
 <div align="center">
-<img src="https://img.shields.io/github/license/sushantPatrikar/Dinosaur-Game">	
-<img src="https://www.codefactor.io/repository/github/sushantpatrikar/flappybirdai/badge/master"/>
-<img src="https://img.shields.io/github/issues-pr/sushantPatrikar/flappyBirdAI">
-<img src="https://img.shields.io/github/stars/sushantPatrikar/flappybirdAI">
-<img src="https://img.shields.io/github/forks/sushantPatrikar/flappybirdAI">
-<img src="https://img.shields.io/github/issues/sushantPatrikar/flappybirdAI">
+<img src="https://img.shields.io/github/license/sushantPatrikar/teachable-dinosaur">	
+<img src="https://www.codefactor.io/repository/github/sushantpatrikar/teachable-dinosaur/badge?s=47db980d7cbdc347f8775087b22eee938231b691">
+<img src="https://img.shields.io/github/issues/sushantPatrikar/teachable-dinosaur">
+<img src="https://img.shields.io/github/stars/sushantPatrikar/teachable-dinosaur">
+<img src="https://img.shields.io/github/forks/sushantPatrikar/teachable-dinosaur">
+<img src="https://img.shields.io/github/issues/sushantPatrikar/teachable-dinosaur">
 <img src="https://img.shields.io/badge/PRs-welcome-informational">
 </div>
 
-<h4 align="center">Flappy Bird game, but AI plays it</h4>
+<h4 align="center">Dinosaur game, but with a bit of Computer Vision</h4>
 
 <hr>
 
 <p align="center">
-<img src = "./img/fb.gif" height=400 width=600>
+<img src = "./img/demo2.gif" height=400 width=800>
 </p>
 <h2> How it works</h2>
 <p>There are 8 inputs to neural network</p>
