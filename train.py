@@ -16,7 +16,6 @@ def capture_do_nothing():
     exit = False
     while not exit:
         return_value, image = camera.read()
-        # gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         cv2.imshow('image', image)
         count = 0
         if cv2.waitKey(1) & 0xFF == ord('s'):
@@ -87,7 +86,7 @@ def load_model():
     model.add(MaxPool2D(pool_size=(2,2),strides=(2,2)))
     model.add(Flatten())
     model.add(Dense(512,activation='relu'))
-    model.add(Dense(2,activation='softmax'))
+    model.add(Dense(2,activation='sigmoid'))
     model.compile(optimizer='adam',loss='categorical_crossentropy',metrics=['accuracy'])
     return model
 def train(model,X,y):
