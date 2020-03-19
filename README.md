@@ -15,7 +15,7 @@
 <img src="https://img.shields.io/badge/PRs-welcome-informational">
 </div>
 
-<h4 align="center">Dinosaur game, but with a bit of Computer Vision</h4>
+<h4 align="center">Dinosaur game, but with a bit of computer vision</h4>
 
 <hr>
 
