@@ -25,7 +25,8 @@ def capture_do_nothing():
         count = 0
         if cv2.waitKey(1) & 0xFF == ord('s'):
             while count != 1000:
-                im = Image.fromarray(image)
+                im = cv2.cvtColor(image,cv2.COLOR_BGR2RGB)
+                im = Image.fromarray(im)
                 im = im.resize((100, 100))
                 im = np.array(im)
                 append_to_df(im,0)
@@ -50,7 +51,8 @@ def capture_jump():
         count = 0
         if cv2.waitKey(1) & 0xFF == ord('s'):
             while count != 1000:
-                im = Image.fromarray(image)
+                im = cv2.cvtColor(image,cv2.COLOR_BGR2RGB)
+                im = Image.fromarray(im)
                 im = im.resize((100, 100))
                 im = np.array(im)
                 append_to_df(im, 1)

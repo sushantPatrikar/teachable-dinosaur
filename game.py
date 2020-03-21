@@ -68,7 +68,7 @@ class Game:
         cv2.resizeWindow('image', 300, 350)
         return_value, image = self.camera.read()
         cv2.imshow('image', image)
-        # gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        im = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         im = Image.fromarray(image)
         im = im.resize((100, 100))
         im = np.array(im)
