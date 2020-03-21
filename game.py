@@ -26,6 +26,7 @@ class Game:
     y = 50
     camera = cv2.VideoCapture(0)
     exit = False
+    score = 0
 
     def __init__(self):
         self.model = self.load_model()
@@ -72,6 +73,10 @@ class Game:
             else:
                 if self.y == 50:
                     self.y += 150
+            self.score+=1
+            text = pygame.font.Font('freesansbold.ttf', 20)
+            textSurf = text.render("Score: "+str(self.score), True, self.black)
+            self.display.blit(textSurf, [10,10])
             self.display.blit(self.dino, [10, self.height - self.y - self.dino_rect.height])
             pygame.display.update()
             if self.y > 50:
