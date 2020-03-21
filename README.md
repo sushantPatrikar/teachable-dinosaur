@@ -37,7 +37,7 @@ When you run the file, an opencv frame will pop up, here you have to give the da
 <img src = "./img/demo_run.gif" height=200 width=200>
 </p>
 
-Make a gesture with which you will tell the dinosaur to run. For example, in my case, it was a closed fist. When you are ready with the gesture, press the 's' key on your keyboard. This will capture 1500 burst shots of your gesture.
+Make a gesture which will tell the dinosaur to run. For example, in my case, it was a closed fist. When you are ready with the gesture, press the 's' key on your keyboard. This will capture 1500 burst shots of your gesture.
 
 <p align="center">
 <img src = "./img/demo_jump.gif" height=200 width=200>
