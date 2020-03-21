@@ -93,6 +93,10 @@ class Game:
         im = (im.astype(float) - 128) / 128
         return im
 
+    def freeze_model(self,model):
+        for layer in model.layers:
+            layer.trainable = False
+
     def load_model(self):
         model = Sequential()
         model.add(Conv2D(32, kernel_size=(3, 3), strides=(1, 1), activation='relu', input_shape=(100, 100, 3)))
