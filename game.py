@@ -3,8 +3,10 @@ import random
 import cv2
 from PIL import Image
 import numpy as np
-from keras.models import Sequential
+from keras.models import Sequential,Model
 from keras.layers import Dense, Conv2D, Flatten, MaxPool2D,Dropout,MaxPooling2D
+from keras.applications import mobilenet
+import train
 
 
 class Game:
@@ -63,6 +65,7 @@ class Game:
         quit()
 
     def take_photo(self):
+        cv2.resizeWindow('image', 300, 350)
         return_value, image = self.camera.read()
         cv2.imshow('image', image)
         # gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -70,8 +73,12 @@ class Game:
         im = im.resize((100, 100))
         im = np.array(im)
         im = np.resize(im, (1, 100, 100, 3))
-        (im.astype(float) - 128) / 128
+        im = (im.astype(float) - 128) / 128
         return im
+
+    def freeze_model(self,model):
+        for layer in model.layers:
+            layer.trainable = False
 
     def load_model(self):
         model = Sequential()
@@ -79,8 +86,8 @@ class Game:
         model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
         model.add(Conv2D(64, kernel_size=(3, 3), strides=(1, 1), activation='relu'))
         model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
-        model.add(Conv2D(128, kernel_size=(3, 3), strides=(1, 1), activation='relu'))
-        model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+        # model.add(Conv2D(128, kernel_size=(3, 3), strides=(1, 1), activation='relu'))
+        # model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
         model.add(Flatten())
         # model.add(Dense(512, activation='sigmoid'))
         model.add(Dense(1024, activation='sigmoid'))
