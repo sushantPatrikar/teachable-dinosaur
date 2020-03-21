@@ -3,9 +3,8 @@ import random
 import cv2
 from PIL import Image
 import numpy as np
-from keras.models import Sequential,Model
-from keras.layers import Dense, Conv2D, Flatten, MaxPool2D,Dropout,MaxPooling2D
-
+from keras.models import Sequential, Model
+from keras.layers import Dense, Conv2D, Flatten, MaxPool2D, Dropout, MaxPooling2D
 
 
 class Game:
@@ -40,17 +39,18 @@ class Game:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     quit()
-                if event.type ==pygame.KEYDOWN:
+                if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE:
                         self.gameloop()
             self.display.fill(self.white)
             largeText = pygame.font.Font('freesansbold.ttf', 100)
-            textSurf = largeText.render("Press SPACE to play",True,self.black)
+            textSurf = largeText.render("Press SPACE to play", True, self.black)
             textRect = textSurf.get_rect()
             textRect.center = ((self.width / 2), (self.height / 2))
             self.display.blit(textSurf, textRect)
             pygame.display.update()
             self.clock.tick(30)
+
     def gameloop(self):
         while not self.gameExit:
             self.display.fill(self.white)
@@ -73,10 +73,10 @@ class Game:
             else:
                 if self.y == 50:
                     self.y += 150
-            self.score+=1
+            self.score += 1
             text = pygame.font.Font('freesansbold.ttf', 20)
-            textSurf = text.render("Score: "+str(self.score), True, self.black)
-            self.display.blit(textSurf, [10,10])
+            textSurf = text.render("Score: " + str(self.score), True, self.black)
+            self.display.blit(textSurf, [10, 10])
             self.display.blit(self.dino, [10, self.height - self.y - self.dino_rect.height])
             pygame.display.update()
             if self.y > 50:
@@ -84,6 +84,8 @@ class Game:
             self.clock.tick(30)
             self.counter += 1
         pygame.quit()
+        self.camera.release()
+        cv2.destroyAllWindows()
         quit()
 
     def take_photo(self):
@@ -98,7 +100,7 @@ class Game:
         im = (im.astype(float) - 128) / 128
         return im
 
-    def freeze_model(self,model):
+    def freeze_model(self, model):
         for layer in model.layers:
             layer.trainable = False
 

@@ -2,10 +2,11 @@ import cv2
 import pandas as pd
 import time
 import numpy as np
-from keras.models import Sequential,Model
-from keras.layers import Dense, Conv2D, Flatten, MaxPool2D,Dropout,MaxPooling2D
+from keras.models import Sequential, Model
+from keras.layers import Dense, Conv2D, Flatten, MaxPool2D, Dropout, MaxPooling2D
 from keras.utils import to_categorical
 from PIL import Image
+
 global df
 
 df = pd.DataFrame(columns=['Image', 'Action'])
@@ -17,17 +18,17 @@ def capture_do_nothing():
     camera = cv2.VideoCapture(0)
     exit = False
     while not exit:
-        cv2.resizeWindow('image',300,350)
+        cv2.resizeWindow('image', 300, 350)
         return_value, image = camera.read()
         cv2.imshow('image', image)
         count = 0
         if cv2.waitKey(1) & 0xFF == ord('s'):
             while count != 1500:
-                im = cv2.cvtColor(image,cv2.COLOR_BGR2RGB)
+                im = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
                 im = Image.fromarray(im)
                 im = im.resize((100, 100))
                 im = np.array(im)
-                append_to_df(im,0)
+                append_to_df(im, 0)
                 count += 1
                 return_value, image = camera.read()
                 cv2.imshow('image', image)
@@ -43,13 +44,13 @@ def capture_jump():
     camera = cv2.VideoCapture(0)
     exit = False
     while not exit:
-        cv2.resizeWindow('image',300,350)
+        cv2.resizeWindow('image', 300, 350)
         return_value, image = camera.read()
         cv2.imshow('image', image)
         count = 0
         if cv2.waitKey(1) & 0xFF == ord('s'):
             while count != 1500:
-                im = cv2.cvtColor(image,cv2.COLOR_BGR2RGB)
+                im = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
                 im = Image.fromarray(im)
                 im = im.resize((100, 100))
                 im = np.array(im)
@@ -63,9 +64,10 @@ def capture_jump():
     cv2.destroyAllWindows()
 
 
-def append_to_df(image,action):
+def append_to_df(image, action):
     global df
-    df = df.append({'Image':image,'Action':int(action)},ignore_index=True)
+    df = df.append({'Image': image, 'Action': int(action)}, ignore_index=True)
+
 
 def prepare_dataset():
     global df
@@ -81,9 +83,11 @@ def prepare_dataset():
     y = to_categorical(Y)
     return x, y
 
+
 def freeze_model(model):
     for layer in model.layers:
         layer.trainable = False
+
 
 def load_model():
     model = Sequential()
@@ -98,8 +102,9 @@ def load_model():
     model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
     return model
 
+
 def train(model, X, y):
-    model.fit(X, y, batch_size=64, epochs=3,shuffle=True)
+    model.fit(X, y, batch_size=64, epochs=3, shuffle=True)
 
 
 def save_model(model):
