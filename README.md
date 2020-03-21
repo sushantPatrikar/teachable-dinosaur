@@ -43,7 +43,7 @@ Make a gesture which will tell the dinosaur to run. For example, in my case, it 
 <img src = "./img/demo_jump.gif" height=200 width=200>
 </p>
 
-After this step, the similar opencv window will pop up, now make another gesture that will tell the dinosaur to jump. In my case, it was the open palm. Again press 's' key on your keyborad when you are ready. This will take another 1500 burst shot. 
+After this step, the similar opencv window will pop up, now make another gesture that will tell the dinosaur to jump. In my case, it was the open palm. Again press 's' key on your keyborad when you are ready. This will take another 1500 burst shots. 
 
 Note: Don't keep your gesture as it is for all the 1500 burst shots. Keep the gesture moving little after some interval. This is to avoid overfitting of the model.
 
