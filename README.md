@@ -30,7 +30,8 @@ Clone this repsitory using the following command:
 git clone https://github.com/sushantPatrikar/teachable-dinosaur.git
 ```
 
-After cloning, run "train.py" file
+After cloning, run "train.py" file.
+
 When you run the file, an opencv frame will pop up, here you have to give the dataset for training.
 
 <p align="center">
