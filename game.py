@@ -4,7 +4,7 @@ import cv2
 from PIL import Image
 import numpy as np
 from keras.models import Sequential
-from keras.layers import Dense, Conv2D, Flatten, MaxPool2D
+from keras.layers import Dense, Conv2D, Flatten, MaxPool2D,Dropout,MaxPooling2D
 
 
 class Game:
@@ -65,22 +65,26 @@ class Game:
     def take_photo(self):
         return_value, image = self.camera.read()
         cv2.imshow('image', image)
-        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-        gray = Image.fromarray(gray)
-        gray = gray.resize((50, 50))
-        gray = np.array(gray)
-        gray = np.resize(gray, (1, 50, 50, 1))
-        (gray.astype(float) - 128) / 128
-        return gray
+        # gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        im = Image.fromarray(image)
+        im = im.resize((100, 100))
+        im = np.array(im)
+        im = np.resize(im, (1, 100, 100, 3))
+        (im.astype(float) - 128) / 128
+        return im
 
     def load_model(self):
         model = Sequential()
-        model.add(Conv2D(32, kernel_size=(3, 3), strides=(1, 1), activation='relu', input_shape=(50, 50, 1)))
-        model.add(MaxPool2D(pool_size=(2, 2), strides=(2, 2)))
+        model.add(Conv2D(32, kernel_size=(3, 3), strides=(1, 1), activation='relu', input_shape=(100, 100, 3)))
+        model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
         model.add(Conv2D(64, kernel_size=(3, 3), strides=(1, 1), activation='relu'))
-        model.add(MaxPool2D(pool_size=(2, 2), strides=(2, 2)))
+        model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+        model.add(Conv2D(128, kernel_size=(3, 3), strides=(1, 1), activation='relu'))
+        model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
         model.add(Flatten())
-        model.add(Dense(512, activation='relu'))
+        # model.add(Dense(512, activation='sigmoid'))
+        model.add(Dense(1024, activation='sigmoid'))
+        model.add(Dropout(0.6))
         model.add(Dense(2, activation='sigmoid'))
         model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
         return model
