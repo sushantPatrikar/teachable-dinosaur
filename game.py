@@ -3,8 +3,8 @@ import random
 import cv2
 from PIL import Image
 import numpy as np
-from keras.models import Sequential, Model
-from keras.layers import Dense, Conv2D, Flatten, MaxPool2D, Dropout, MaxPooling2D
+from keras.models import Sequential
+from keras.layers import Dense, Conv2D, Flatten, Dropout, MaxPooling2D
 
 
 class Game:
@@ -19,10 +19,13 @@ class Game:
     dino = pygame.image.load('img/dino.png').convert_alpha()
     cactus = pygame.image.load('img/cactus.png').convert_alpha()
     dino_rect = dino.get_rect()
+
     cactus_rect = cactus.get_rect()
     cactuses = []
     counter = 0
     y = 50
+    dino_rect.x = 10
+    dino_rect.y = height - y - dino_rect.height
     camera = cv2.VideoCapture(0)
     exit = False
     score = 0
@@ -55,6 +58,8 @@ class Game:
         while not self.gameExit:
             self.display.fill(self.white)
             pygame.draw.line(self.display, self.black, (0, self.height - 50), (self.width, self.height - 50))
+            self.dino_rect.x = 10
+            self.dino_rect.y = self.height - self.y - self.dino_rect.height
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.gameExit = True
@@ -63,8 +68,8 @@ class Game:
                 self.cactuses.append(Cactus())
             for c in self.cactuses:
                 c.showCactus()
-                c.x -= 15
-                if c.x <= -c.rect.width:
+                c.rect.x -= 13
+                if c.rect.x <= -c.rect.width:
                     self.cactuses = self.cactuses[1:]
             pic = self.take_photo()
             result = self.predict(pic)
@@ -77,16 +82,26 @@ class Game:
             text = pygame.font.Font('freesansbold.ttf', 20)
             textSurf = text.render("Score: " + str(self.score), True, self.black)
             self.display.blit(textSurf, [10, 10])
-            self.display.blit(self.dino, [10, self.height - self.y - self.dino_rect.height])
+            self.display.blit(self.dino, self.dino_rect)
             pygame.display.update()
             if self.y > 50:
                 self.y -= 10
+            for cact in self.cactuses:
+                if self.dino_rect.colliderect(cact.rect):
+                    self.gameExit = True
+                    break
             self.clock.tick(30)
             self.counter += 1
         pygame.quit()
         self.camera.release()
         cv2.destroyAllWindows()
         quit()
+
+    def collide(self, cactuslist):
+        for eachCactus in cactuslist:
+            if pygame.sprite.collide_rect(self.dino, eachCactus):
+                return True
+            return False
 
     def take_photo(self):
         cv2.resizeWindow('image', 300, 350)
@@ -99,10 +114,6 @@ class Game:
         im = np.resize(im, (1, 100, 100, 3))
         im = (im.astype(float) - 128) / 128
         return im
-
-    def freeze_model(self, model):
-        for layer in model.layers:
-            layer.trainable = False
 
     def load_model(self):
         model = Sequential()
