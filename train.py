@@ -14,7 +14,6 @@ df = pd.DataFrame(columns=['Image', 'Action'])
 
 def capture_do_nothing():
     global df
-    action = 0
     camera = cv2.VideoCapture(0)
     exit = False
     while not exit:
@@ -40,7 +39,6 @@ def capture_do_nothing():
 
 def capture_jump():
     global df
-    action = 1
     camera = cv2.VideoCapture(0)
     exit = False
     while not exit:
@@ -82,11 +80,6 @@ def prepare_dataset():
     x = np.reshape(x, (X.shape[0], 100, 100, 3))
     y = to_categorical(Y)
     return x, y
-
-
-def freeze_model(model):
-    for layer in model.layers:
-        layer.trainable = False
 
 
 def load_model():
