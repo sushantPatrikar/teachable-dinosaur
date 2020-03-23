@@ -3,8 +3,7 @@ import random
 import cv2
 from PIL import Image
 import numpy as np
-from keras.models import Sequential
-from keras.layers import Dense, Conv2D, Flatten, Dropout, MaxPooling2D
+import train
 
 
 class Game:
@@ -16,22 +15,20 @@ class Game:
     white = (255, 255, 255)
     display = pygame.display.set_mode((width, height))
     gameExit = False
-    dino = pygame.image.load('img/dino.png').convert_alpha()
     cactus = pygame.image.load('img/cactus.png').convert_alpha()
-    dino_rect = dino.get_rect()
-
+    pygame.display.set_caption("Teachable Dinosaur")
     cactus_rect = cactus.get_rect()
     cactuses = []
     counter = 0
-    y = 50
-    dino_rect.x = 10
-    dino_rect.y = height - y - dino_rect.height
     camera = cv2.VideoCapture(0)
     exit = False
     score = 0
+    cac = False
 
     def __init__(self):
-        self.model = self.load_model()
+        from dinosaur import Dinosaur
+        self.dino = Dinosaur()
+        self.model = train.load_model()
         self.model.load_weights('weights.h5')
         self.intro()
 
@@ -55,19 +52,20 @@ class Game:
             self.clock.tick(30)
 
     def gameloop(self):
+
         while not self.gameExit:
             self.display.fill(self.white)
             pygame.draw.line(self.display, self.black, (0, self.height - 50), (self.width, self.height - 50))
-            self.dino_rect.x = 10
-            self.dino_rect.y = self.height - self.y - self.dino_rect.height
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.gameExit = True
             if self.counter % (random.randrange(100, 110)) == 0:
+                self.cac = True
                 from cactus import Cactus
                 self.cactuses.append(Cactus())
             for c in self.cactuses:
                 c.showCactus()
+                c.hitbox = [c.rect.x, c.rect.y + 5, 41, 45]
                 c.rect.x -= 13
                 if c.rect.x <= -c.rect.width:
                     self.cactuses = self.cactuses[1:]
@@ -76,32 +74,25 @@ class Game:
             if result == 0:
                 pass
             else:
-                if self.y == 50:
-                    self.y += 150
+                self.dino.jump()
+            self.dino.updateVariables()
             self.score += 1
             text = pygame.font.Font('freesansbold.ttf', 20)
             textSurf = text.render("Score: " + str(self.score), True, self.black)
             self.display.blit(textSurf, [10, 10])
-            self.display.blit(self.dino, self.dino_rect)
+            self.dino.show()
+            self.dinoHitbox = pygame.Rect(self.dino.hitbox)
             pygame.display.update()
-            if self.y > 50:
-                self.y -= 10
-            for cact in self.cactuses:
-                if self.dino_rect.colliderect(cact.rect):
-                    self.gameExit = True
-                    break
+            if self.dino.var > 50:
+                self.dino.var -= 10
+            if self.collision() and self.cac:
+                self.gameExit = True
             self.clock.tick(30)
             self.counter += 1
         pygame.quit()
         self.camera.release()
         cv2.destroyAllWindows()
         quit()
-
-    def collide(self, cactuslist):
-        for eachCactus in cactuslist:
-            if pygame.sprite.collide_rect(self.dino, eachCactus):
-                return True
-            return False
 
     def take_photo(self):
         cv2.resizeWindow('image', 300, 350)
@@ -115,23 +106,16 @@ class Game:
         im = (im.astype(float) - 128) / 128
         return im
 
-    def load_model(self):
-        model = Sequential()
-        model.add(Conv2D(32, kernel_size=(3, 3), strides=(1, 1), activation='relu', input_shape=(100, 100, 3)))
-        model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
-        model.add(Conv2D(64, kernel_size=(3, 3), strides=(1, 1), activation='relu'))
-        model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
-        model.add(Flatten())
-        model.add(Dense(1000, activation='sigmoid'))
-        model.add(Dropout(0.4))
-        model.add(Dense(2, activation='sigmoid'))
-        model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
-        return model
-
     def predict(self, pic):
         prob = self.model.predict(pic)
         result = np.argmax(prob)
         return result
+
+    def collision(self):
+        for cactus in self.cactuses:
+            if self.dinoHitbox.colliderect(pygame.Rect(cactus.hitbox)):
+                return True
+            return False
 
 
 if __name__ == '__main__':

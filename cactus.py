@@ -11,6 +11,8 @@ class Cactus:
         self.rect = self.cactus.get_rect()
         self.rect.x = self.x
         self.rect.y = Game.height - 50 - self.rect.height
+        self.hitbox = [self.rect.x,self.rect.y+5,41,45]
 
     def showCactus(self):
         Game.display.blit(self.cactus, self.rect)
+
