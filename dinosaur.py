@@ -9,8 +9,8 @@ class Dinosaur:
         self.rect = self.image.get_rect()
         self.x = 10
         self.var = 50
-        self.y = Game.height-self.var-self.rect.height
-        self.hitbox = [self.x+5, self.y+20 ,45, 50]
+        self.y = Game.height - self.var - self.rect.height
+        self.hitbox = [self.x + 5, self.y + 20, 45, 50]
         self.rect.x = self.x
         self.rect.y = self.y
 
@@ -19,11 +19,11 @@ class Dinosaur:
             self.var += 150
 
     def show(self):
-        Game.display.blit(self.image,self.rect)
+        Game.display.blit(self.image, self.rect)
 
     def updateVariables(self):
         self.x = 10
         self.y = Game.height - self.var - self.rect.height
         self.rect.x = self.x
         self.rect.y = self.y
-        self.hitbox = [self.x + 5, self.y+20, 45, 50]
+        self.hitbox = [self.x + 5, self.y + 20, 45, 50]

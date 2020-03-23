@@ -2,8 +2,8 @@ import cv2
 import pandas as pd
 import time
 import numpy as np
-from keras.models import Sequential, Model
-from keras.layers import Dense, Conv2D, Flatten, MaxPool2D, Dropout, MaxPooling2D
+from keras.models import Sequential
+from keras.layers import Dense, Conv2D, Flatten, Dropout, MaxPooling2D
 from keras.utils import to_categorical
 from PIL import Image
 
