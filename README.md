@@ -1,6 +1,6 @@
 <p align="center">
   <a href="" rel="noopener">
- <img height=150px src="./img/dino.png" alt="dino-logo"></a>
+ <img height=100px src="./img/dino.png" alt="dino-logo"></a>
 </p>
 <h1 align="center">teachable dinosaur</h1>
 
