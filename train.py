@@ -89,15 +89,14 @@ def load_model():
     model.add(Conv2D(64, kernel_size=(3, 3), strides=(1, 1), activation='relu'))
     model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
     model.add(Flatten())
-    model.add(Dense(1000, activation='sigmoid'))
-    model.add(Dropout(0.4))
+    model.add(Dropout(0.8))
     model.add(Dense(2, activation='sigmoid'))
     model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
     return model
 
 
 def train(model, X, y):
-    model.fit(X, y, batch_size=64, epochs=3, shuffle=True)
+    model.fit(X, y, batch_size=64, epochs=1, shuffle=True)
 
 
 def save_model(model):
