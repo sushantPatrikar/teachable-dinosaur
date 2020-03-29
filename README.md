@@ -27,7 +27,7 @@
 
 Clone this repsitory using the following command:
 ```
-git clone https://github.com/sushantPatrikar/teachable-dinosaur.git
+$ git clone https://github.com/sushantPatrikar/teachable-dinosaur.git
 ```
 
 After cloning, run "train.py" file.
