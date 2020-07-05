@@ -15,7 +15,7 @@
 <img src="https://img.shields.io/badge/PRs-welcome-informational">
 </div>
 
-<h4 align="center">Dinosaur game, but with a bit of computer vision</h4>
+<h4 align="center">Dinosaur game, but in a Machine Learning way</h4>
 
 <hr>
 
@@ -27,7 +27,7 @@
 
 Clone this repsitory using the following command:
 ```
-git clone https://github.com/sushantPatrikar/teachable-dinosaur.git
+$ git clone https://github.com/sushantPatrikar/teachable-dinosaur.git
 ```
 
 After cloning, run "train.py" file.
