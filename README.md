@@ -20,7 +20,7 @@
 <hr>
 
 <p align="center">
-<img src = "./img/demo-min.gif" height=400 width=800>
+<img src = "./img/demo-lite.gif" height=400 width=800>
 </p>
 
 <h2>How to use:</h2>
